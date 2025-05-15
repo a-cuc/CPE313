@@ -3,4 +3,3 @@ torchvision
 pillow
 decord
 numpy
-tempfile
