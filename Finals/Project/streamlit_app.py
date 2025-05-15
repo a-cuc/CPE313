@@ -30,7 +30,7 @@ def load_model(weights_path):
     base = models.efficientnet_v2_s(weights='DEFAULT')
     base.classifier = nn.Identity()
     model = CustomFineTuneModel(base)
-    model.load_state_dict(torch.load(weights_path, map_location="cpu", weights_only=False))
+    model.load_state_dict(torch.load(weights_path, map_location="cpu"))
     model.eval()
     return model
 
@@ -74,7 +74,7 @@ if uploaded_file is not None:
     video_tensor = preprocess_frames(frames, transform)
 
     # Load model
-    model = load_model("Finals/Project/streamlit_app.py")
+    model = load_model("Finals/Project/model2_new_weights.pth")
 
     # Predict
     with torch.no_grad():
