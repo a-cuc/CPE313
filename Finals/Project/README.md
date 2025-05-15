@@ -13,7 +13,8 @@ Video frames are extracted and is grouped with the final size being:
  [batch size, sequence length, channels, height, width]
 ```
 
-![Dataset](https://lh4.googleusercontent.com/Kk7PCh49e0N_as0RfwnHjFKix3Bfo9uiIT5NZ17icshq2D2pdn2LwQ1cqVM5H54l8RmwO3tGLzLWLaSSmlxYsNoknK6zQp-NHFqraHzVFmDtTTmf=w1280)
+![image](https://github.com/user-attachments/assets/58b9c450-9e31-4c8f-9300-24e51ea3b605)
+
 
 
 ## Models
