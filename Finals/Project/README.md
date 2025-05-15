@@ -21,12 +21,15 @@ Video frames are extracted and is grouped with the final size being:
 
 Three models are developed:
 - Custom model
+
 The entire group is passed through a `Conv3D` layer, applying `GroupNorm` and `weight_norm` to improve model training [1]. The `Conv3D` module in Pytorch also includes parameters such as *padding* and *groups* [2]. The output is then passed through a Stacked LSTM network.
 
 - Transfer learning with EfficientNet
+
 EfficientNet is used as the CNN backbone, with its output reshaped and fed into the Vanilla LSTM network.
 
 - Transfer learning with ShuffleNet
+
 ShuffleNet is used as the CNN backbone, with its output reshaped and fed into the Vanilla LSTM network.
 
 Cosine Annealing with Warm Restarts is used as the scheduler to modify the learning rate per epochs [3]. The hyperparameters used for the models are as follows:
