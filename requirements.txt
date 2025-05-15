@@ -1,0 +1,6 @@
+torch
+torchvision
+pillow
+decord
+numpy
+tempfile
