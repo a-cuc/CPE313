@@ -74,7 +74,7 @@ if uploaded_file is not None:
     video_tensor = preprocess_frames(frames, transform)
 
     # Load model
-    model = load_model("model2_new_weights.pth")
+    model = load_model("Finals/Project/streamlit_app.py")
 
     # Predict
     with torch.no_grad():
