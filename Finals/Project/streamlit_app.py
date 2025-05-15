@@ -82,4 +82,4 @@ if uploaded_file is not None:
         prob = torch.sigmoid(output).item()
         pred = 1 if prob > 0.5 else 0
 
-    st.write(f"**Prediction:** {'Fatigued' if pred == 1 else 'Awake'} (probability: {prob:.2f})")
+    st.write(f"**Prediction:** {'Fatigued' if pred == 1 else 'Awake'}")
