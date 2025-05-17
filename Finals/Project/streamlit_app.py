@@ -60,7 +60,7 @@ if uploaded_file is not None:
         video_path = tmpfile.name
 
     # Layout with two columns: Video and First Frame
-    col1, col2 = st.columns([1, 3])
+    col1, col2 = st.columns(1)
 
     with col1:
         st.video(video_path)
