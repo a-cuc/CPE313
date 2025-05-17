@@ -1,3 +1,12 @@
+import streamlit as st
+import torch
+import torch.nn as nn
+from torchvision import models, transforms
+from PIL import Image
+import tempfile
+from decord import VideoReader, cpu
+import numpy as np
+
 # Model Definition
 class CustomFineTuneModel(nn.Module):
     def __init__(self, base_model):
