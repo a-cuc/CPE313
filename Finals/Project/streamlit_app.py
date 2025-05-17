@@ -1,12 +1,3 @@
-import streamlit as st
-import torch
-import torch.nn as nn
-from torchvision import models, transforms
-from PIL import Image
-import tempfile
-from decord import VideoReader, cpu
-import numpy as np
-
 # Model Definition
 class CustomFineTuneModel(nn.Module):
     def __init__(self, base_model):
@@ -63,15 +54,23 @@ if uploaded_file is not None:
     col1, col2 = st.columns(2)
 
     with col1:
-        st.video(video_path)
-        st.write("📽️ Uploaded video preview")
+        st.markdown(
+            f"""
+            <video width="480" controls>
+                <source src="data:video/mp4;base64,{uploaded_file.getvalue().decode('ISO-8859-1')}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            """,
+            unsafe_allow_html=True
+        )
+        st.caption("📽️ Uploaded video preview")
 
     st.write("Extracting 🖼️ frames...")
     frames = extract_frames(video_path, num_frames=24, size=(224, 224))
     st.success(f"✅ Extracted {len(frames)} frames.")
 
     with col2:
-        st.image(frames[0], caption="🖼️ First Frame", use_column_width=True)
+        st.image(frames[0], caption="🖼️ First Frame", width=480)
 
     # Preprocess frames
     transform = transforms.Compose([
