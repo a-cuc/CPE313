@@ -60,18 +60,10 @@ if uploaded_file is not None:
         video_path = tmpfile.name
 
     # Layout with two columns: Video and First Frame
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([1, 1])
 
     with col1:
-        st.markdown(
-            f"""
-            <video width="480" controls>
-                <source src="data:video/mp4;base64,{uploaded_file.getvalue().decode('ISO-8859-1')}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            """,
-            unsafe_allow_html=True
-        )
+        st.video(video_path)
         st.caption("📽️ Uploaded video preview")
 
     st.write("Extracting 🖼️ frames...")
