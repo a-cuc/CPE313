@@ -88,10 +88,4 @@ if uploaded_file is not None:
         prob = torch.sigmoid(output).item()
         pred = 1 if prob > 0.5 else 0
 
-    # Display prediction in columns
-    col3, col4 = st.columns([1, 2])
-    with col3:
         st.metric("🧠 Prediction", "Fatigued" if pred == 1 else "Awake")
-
-    with col4:
-        st.progress(min(max(prob, 0), 1), text=f"Confidence: {prob:.2%}")
