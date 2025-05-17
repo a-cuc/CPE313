@@ -60,7 +60,7 @@ if uploaded_file is not None:
         video_path = tmpfile.name
 
     # Layout with two columns: Video and First Frame
-    col1, col2 = st.columns([1,2])
+    col1, col2 = st.columns([1,5])
 
     with col1:
         st.video(video_path)
@@ -71,7 +71,7 @@ if uploaded_file is not None:
     st.success(f"✅ Extracted {len(frames)} frames.")
 
     with col2:
-        st.image(frames[0], caption="🖼️ First Frame", use_container_width=True)
+        st.image(frames[0], caption="🖼️ First Frame")
 
     # Preprocess frames
     transform = transforms.Compose([
