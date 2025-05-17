@@ -13,13 +13,13 @@ class CustomFineTuneModel(nn.Module):
         super(CustomFineTuneModel, self).__init__()
         self.base_model = base_model
         self.lstm_layer = nn.LSTM(input_size=1280, hidden_size=64, batch_first=True)
-        self.final_classifier = nn.Linear(64, 1) 
+        self.final_classifier = nn.Linear(64, 1)
 
     def forward(self, x):
         batch_size, sequence, channels, height, width = x.size()
         x = x.view(batch_size * sequence, channels, height, width)
         x = self.base_model(x)
-        x = x.view(batch_size, sequence, -1)  # Reshape for LSTM input
+        x = x.view(batch_size, sequence, -1)
         output, (h_n, c_n) = self.lstm_layer(x)
         x = self.final_classifier(h_n.squeeze(0))
         return x.squeeze()
@@ -44,42 +44,54 @@ def extract_frames(video_path, num_frames=16, size=(224, 224)):
 
 def preprocess_frames(frames, transform):
     tensors = [transform(img) for img in frames]
-    video_tensor = torch.stack(tensors, dim=0)  # (T, C, H, W)
-    video_tensor = video_tensor.unsqueeze(0)    # (1, T, C, H, W)
+    video_tensor = torch.stack(tensors, dim=0)
+    video_tensor = video_tensor.unsqueeze(0)
     return video_tensor
 
 # Streamlit UI
-st.title("🥱Fatigue😴 Detection with CNN-LSTM")
+st.set_page_config(layout="wide")
+st.title("🥱 Fatigue Detection with CNN-LSTM 😴")
 
 uploaded_file = st.file_uploader("Upload a video 📽️ file", type=["mp4", "avi", "mov"])
+
 if uploaded_file is not None:
     with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as tmpfile:
         tmpfile.write(uploaded_file.read())
         video_path = tmpfile.name
 
-    st.video(video_path)
+    # Layout with two columns: Video and First Frame
+    col1, col2 = st.columns(2)
 
-    st.write("Extracting 🖼️frames...")
+    with col1:
+        st.video(video_path)
+        st.write("📽️ Uploaded video preview")
+
+    st.write("Extracting 🖼️ frames...")
     frames = extract_frames(video_path, num_frames=24, size=(224, 224))
-    st.write(f"Extracted {len(frames)} frames.")
+    st.success(f"✅ Extracted {len(frames)} frames.")
 
-    # Show first frame
-    st.image(frames[0], caption="First Frame", use_column_width=True)
+    with col2:
+        st.image(frames[0], caption="🖼️ First Frame", use_column_width=True)
 
-    # Preprocess
+    # Preprocess frames
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
     ])
     video_tensor = preprocess_frames(frames, transform)
 
-    # Load model
+    # Load and run model
     model = load_model("Finals/Project/model2_new_weights.pth")
 
-    # Predict
     with torch.no_grad():
         output = model(video_tensor)
         prob = torch.sigmoid(output).item()
         pred = 1 if prob > 0.5 else 0
 
-    st.write(f"**Prediction:** {'Fatigued' if pred == 1 else 'Awake'}")
+    # Display prediction in columns
+    col3, col4 = st.columns([1, 2])
+    with col3:
+        st.metric("🧠 Prediction", "Fatigued" if pred == 1 else "Awake")
+
+    with col4:
+        st.progress(min(max(prob, 0), 1), text=f"Confidence: {prob:.2%}")
