@@ -71,7 +71,7 @@ if uploaded_file is not None:
     st.success(f"✅ Extracted {len(frames)} frames.")
 
     with col2:
-        st.image(frames[0], caption="🖼️ First Frame", width=480)
+        st.image(frames[0], caption="🖼️ First Frame", height=480)
 
     # Preprocess frames
     transform = transforms.Compose([
