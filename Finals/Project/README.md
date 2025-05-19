@@ -50,3 +50,11 @@ References:
 ## Metrics
 
 As the task is classification, the main metric to be used is **accuracy** 🎯 that is compared between training and testing subsets.
+
+## Testing
+
+To test the model's accuracy, the best model is deployed thru **Streamlit**, where a video of an awake and fatigued person is inputted and the predicted class is compared to the actual class
+
+Link: https://drive.google.com/file/d/1iJDZeUNcgjteuLaWyDYIh7TLc4EkzsSh/view?usp=drivesdk
+
+Results show that the video correctly identified the awake and fatigued person
