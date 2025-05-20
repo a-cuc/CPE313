@@ -88,4 +88,4 @@ if uploaded_file is not None:
         prob = torch.sigmoid(output).item()
         pred = 1 if prob > 0.5 else 0
 
-        st.metric("🧠 Prediction", "Fatigued" if pred == 1 else "Awake")
+        st.metric("🧠 Prediction", "Fatigued" if pred == 1 else "Normal")
