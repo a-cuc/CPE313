@@ -75,7 +75,8 @@ if uploaded_file is not None:
 
     # Preprocess frames
     transform = transforms.Compose([
-        transforms.Resize((224, 224)),
+        transforms.Resize((224)),
+        transforms.CenterCrop(224),
         transforms.ToTensor(),
     ])
     video_tensor = preprocess_frames(frames, transform)
