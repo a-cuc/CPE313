@@ -35,11 +35,11 @@ def load_model(weights_path):
     return model
 
 # Video Preprocessing
-def extract_frames(video_path, num_frames=16, size=(224, 224)):
+def extract_frames(video_path, num_frames=16):
     vr = VideoReader(video_path, ctx=cpu(0))
     total_frames = len(vr)
     indices = np.linspace(0, total_frames - 1, num_frames).astype(int)
-    frames = [Image.fromarray(vr[i].asnumpy()).resize(size) for i in indices]
+    frames = [Image.fromarray(vr[i].asnumpy()) for i in indices]
     return frames
 
 def preprocess_frames(frames, transform):
@@ -67,7 +67,7 @@ if uploaded_file is not None:
         st.caption("📽️ Uploaded video preview")
 
     st.write("Extracting 🖼️ frames...")
-    frames = extract_frames(video_path, num_frames=24, size=(224, 224))
+    frames = extract_frames(video_path, num_frames=24)
     st.success(f"✅ Extracted {len(frames)} frames.")
 
     with col2:
