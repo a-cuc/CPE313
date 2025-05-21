@@ -13,6 +13,8 @@ Video frames are extracted and is grouped with the final size being:
  [batch size, sequence length, channels, height, width]
 ```
 
+Data augmentation techniques such as Random Grayscaling and applying a Gaussian Blur to ensure model robustness
+
 ![image](https://github.com/user-attachments/assets/58b9c450-9e31-4c8f-9300-24e51ea3b605)
 
 
@@ -35,9 +37,9 @@ ShuffleNet is used as the CNN backbone, with its output reshaped and fed into th
 Cosine Annealing with Warm Restarts is used as the scheduler to modify the learning rate per epochs [3]. The hyperparameters used for the models are as follows:
 | Hyperparameter   | Value    | 
 | :--------------- | :------- | 
-| `epochs`         | 6        |
+| `epochs`         | 9        |
 | `batch size`     | 8        |
-| `learning rate`  | 1e-3     |
+| `learning rate`  | 1e-4     |
 | `T_0 (scheduler)`| 3        |
 
 References:
