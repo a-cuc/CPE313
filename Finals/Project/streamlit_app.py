@@ -82,7 +82,7 @@ if uploaded_file is not None:
     with col2:
         first_frame_tensor = video_tensor[0, 0]  # shape: (C, H, W)
         first_frame_np = first_frame_tensor.permute(1, 2, 0).numpy()  # (H, W, C)
-        st.image(first_frame_np, caption="🖼️ First Frame (Transformed)", width=300)
+        st.image(first_frame_np, caption="🖼️ First Frame", width=300)
 
     # Load and run model
     model = load_model("Finals/Project/model3_newer_weights.pth")
