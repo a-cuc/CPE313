@@ -71,9 +71,6 @@ if uploaded_file is not None:
     frames = extract_frames(video_path, num_frames=24)
     st.success(f"✅ Extracted {len(frames)} frames.")
 
-    with col2:
-        st.image(frames[0], caption="🖼️ First Frame", width=300)
-
     # Preprocess frames
     transform = transforms.Compose([
         transforms.Resize((224)),
@@ -81,6 +78,11 @@ if uploaded_file is not None:
         transforms.ToTensor(),
     ])
     video_tensor = preprocess_frames(frames, transform)
+    
+    with col2:
+        first_frame_tensor = video_tensor[0, 0]  # shape: (C, H, W)
+        first_frame_np = first_frame_tensor.permute(1, 2, 0).numpy()  # (H, W, C)
+        st.image(first_frame_np, caption="🖼️ First Frame (Transformed)", width=300)
 
     # Load and run model
     model = load_model("Finals/Project/model3_newer_weights.pth")
