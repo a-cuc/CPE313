@@ -12,23 +12,24 @@ class CustomFineTuneModel(nn.Module):
     def __init__(self, base_model):
         super(CustomFineTuneModel, self).__init__()
         self.base_model = base_model
-        self.lstm_layer = nn.LSTM(input_size=1280, hidden_size=64, batch_first=True)
-        self.final_classifier = nn.Linear(64, 1)
+        self.lstm_layer = nn.LSTM(input_size=1024, hidden_size=128, batch_first=True) # add dropout
+        self.final_classifier = nn.Linear(128, 1) 
 
     def forward(self, x):
         batch_size, sequence, channels, height, width = x.size()
         x = x.view(batch_size * sequence, channels, height, width)
         x = self.base_model(x)
-        x = x.view(batch_size, sequence, -1)
+        
+        x = x.view(batch_size, sequence, -1)  # Reshape for LSTM input
         output, (h_n, c_n) = self.lstm_layer(x)
-        x = self.final_classifier(h_n.squeeze(0))
-        return x.squeeze()
+        x = self.final_classifier(h_n[-1])
+        return x.squeeze(-1)
 
 # Load Model
 @st.cache_resource
 def load_model(weights_path):
-    base = models.efficientnet_v2_s(weights='DEFAULT')
-    base.classifier = nn.Identity()
+    base = models.shufflenet_v2_x1_5(weights='DEFAULT')
+    base.fc = nn.Identity()
     model = CustomFineTuneModel(base)
     model.load_state_dict(torch.load(weights_path, map_location="cpu"))
     model.eval()
@@ -82,7 +83,7 @@ if uploaded_file is not None:
     video_tensor = preprocess_frames(frames, transform)
 
     # Load and run model
-    model = load_model("Finals/Project/model2_new_weights.pth")
+    model = load_model("Finals/Project/model3_newer_weights.pth")
 
     with torch.no_grad():
         output = model(video_tensor)
