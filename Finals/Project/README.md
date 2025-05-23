@@ -63,4 +63,5 @@ Results show that the video correctly identified the awake and fatigued person
 
 ## Contributions
 
-- Wrote the introduction, first half of the related works, and streamlit deployment section
+- Wrote the introduction, the first half of the related works, and the streamlit deployment section of the paper
+- Proposed the dataset to be used
