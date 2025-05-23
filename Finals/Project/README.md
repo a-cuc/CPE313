@@ -60,3 +60,7 @@ To test the model's accuracy, the best model is deployed thru **Streamlit**, whe
 Link: https://drive.google.com/file/d/1iJDZeUNcgjteuLaWyDYIh7TLc4EkzsSh/view?usp=drivesdk
 
 Results show that the video correctly identified the awake and fatigued person
+
+## Contributions
+
+- Wrote the introduction, first half of the related works, and streamlit deployment section
